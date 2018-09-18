@@ -23,7 +23,7 @@
 # 
 # First let's create variables to hold the text data in! Save the muder note as a string in a variable called `murder_note`. Save Lily Trebuchet's introduction into `lily_trebuchet_intro`. Save Myrtle Beech's introduction into `myrtle_beech_intro`. Save Gregg T Fishy's introduction into `gregg_t_fishy_intro`.
 
-# In[164]:
+# In[206]:
 
 
 murder_note = "You may call me heartless, a killer, a monster, a murderer, but I'm still NOTHING compared to the villian that Jay was. This whole contest was a sham, an elaborate plot to shame the contestants and feed Jay's massive, massive ego. SURE you think you know him! You've seen him smiling for the cameras, laughing, joking, telling stories, waving his money around like a prop but off camera he was a sinister beast, a cruel cruel taskmaster, he treated all of us like slaves, like cattle, like animals! Do you remember Lindsay, she was the first to go, he called her such horrible things that she cried all night, keeping up all up, crying, crying, and more crying, he broke her with his words. I miss my former cast members, all of them very much. And we had to live with him, live in his home, live in his power, deal with his crazy demands. AND FOR WHAT! DID YOU KNOW THAT THE PRIZE ISN'T REAL? He never intended to marry one of us! The carrot on the stick was gone, all that was left was stick, he told us last night that we were all a terrible terrible disappointment and none of us would ever amount to anything, and that regardless of who won the contest he would never speak to any of us again! It's definitely the things like this you can feel in your gut how wrong he is! Well I showed him, he got what he deserved all right, I showed him, I showed him the person I am! I wasn't going to be pushed around any longer, and I wasn't going to let him go on pretending that he was some saint when all he was was a sick sick twisted man who deserved every bit of what he got. The fans need to know, Jay Stacksby is a vile amalgamation of all things evil and bad and the world is a better place without him."
@@ -44,27 +44,40 @@ gregg_t_fishy_intro = "A most good day to you all, I am Gregg T Fishy, of the Fi
 # 
 # Remember sentences can end with more than one kind of punctuation, you might find it easiest to use **.replace()** so you only have to split on one punctuation mark. Remember **.replace()** doesn't modify the string itself, it returns a new string!</font>
 
-# In[165]:
+# In[207]:
 
+
+#def get_average_sentence_length(text):
+#    punctuation = ".!?,"
+#    split_text = []
+#    #for words in text:
+#    #    split_text.append(words.lower().strip(punctuation).split())
+#    sentences_in_text = text.split('.')
+#    num_sentences_in_text = len(sentences_in_text)
+#    ##print("\nNum sentences . : ",num_sentences_in_text)
+#    split_sent = []
+#    tot_words = 0
+#    for sentence in sentences_in_text:
+#        split_sent.append(sentence.split())
+#        sentence_length = len(sentence.split())
+#        tot_words += sentence_length
+#    ##print ("Tot Words : " , tot_words)    
+#    avg = (tot_words / num_sentences_in_text)
+#    ##print ("Avg : " , avg )
+#    return avg
 
 def get_average_sentence_length(text):
-    punctuation = ".!?,"
-    split_text = []
-    #for words in text:
-    #    split_text.append(words.lower().strip(punctuation).split())
-    sentences_in_text = text.split('.')
+    all_periods = text.replace("!", ".").replace("?", ".")
+    sentences_in_text = all_periods.split('.')[:-1] #this removes the blank at the end
     num_sentences_in_text = len(sentences_in_text)
-    ##print("\nNum sentences . : ",num_sentences_in_text)
-    split_sent = []
     tot_words = 0
     for sentence in sentences_in_text:
-        split_sent.append(sentence.split())
         sentence_length = len(sentence.split())
-        tot_words += sentence_length
-    ##print ("Tot Words : " , tot_words)    
+        tot_words += sentence_length  
     avg = (tot_words / num_sentences_in_text)
-    ##print ("Avg : " , avg )
     return avg
+
+
 get_average_sentence_length(murder_note)
 test = "a baby in the chair. where is he! he is in there."
 get_average_sentence_length(test)
@@ -102,8 +115,11 @@ def frequency_comparison(table1, table2):
             if table2[key] > table1[key]:
                 mutual_appearances += table1[key]
                 appearances += table2[key]
+            else:
+                mutual_appearances += table2[key]
+                appearances += table1[key]
         else:
-            appearances += table1[key]
+            appearances += table1[key] 
     for key in table2.keys():
         if key not in table1.keys():
             appearances += table2[key]
@@ -120,7 +136,7 @@ def frequency_comparison(table1, table2):
 #  
 # This will be your main class for the problem at hand. All later instruction to update `TextSample` should be done in the code block below. After updating `TextSample`, click on the `Cell` option in the Jupyter Notebook main menu above, then click `Run All` to rerun the cells from top to bottom. If you need to restart your Jupyter Notebook either run the cells below first or move the `TextSample` class definition & instantiation cells to the bottom.
 
-# In[166]:
+# In[208]:
 
 
 class TextSample:
@@ -145,7 +161,7 @@ class TextSample:
 #  
 # Print out each one after instantiating them.
 
-# In[167]:
+# In[209]:
 
 
 murderer_sample = TextSample(murder_note, "Murderer's note")
@@ -166,7 +182,7 @@ print("\n",gregg_sample)
 # 
 # For example: `"Where did you go, friend? We nearly saw each other."` would become `['where', 'did', 'you', 'go', 'friend', 'we', 'nearly', 'saw', 'each', 'other']`.
 
-# In[168]:
+# In[210]:
 
 
 print (prepare_text("ABC def ghi!  what. here? me me moi"))
@@ -179,7 +195,7 @@ print (prepare_text("ABC def ghi!  what. here? me me moi"))
 # 
 # Now we want to see which words were most frequently used in each of the samples. Create a function called `build_frequency_table`. It takes in a list called `corpus` and creates a dictionary called `frequency_table`. For every element in `corpus` the value `frequency_table[element]` should be equal to the number of times that element appears in `corpus`. For example the input `['do', 'you', 'see', 'what', 'i', 'see']` would create the frequency table `{'what': 1, 'you': 1, 'see' 2, 'i': 1}`.
 
-# In[169]:
+# In[211]:
 
 
 print (build_frequency_table(prepare_text('do you see what i see')))
@@ -205,7 +221,7 @@ print (build_frequency_table(prepare_text('do you see what i see')))
 # 
 # These are two-word n-grams.
 
-# In[170]:
+# In[212]:
 
 
 test_list = ['what', 'in', 'the', 'world', 'is', 'going', 'on']
@@ -226,7 +242,7 @@ print(ngram_creator(test_list))
 # 
 # Return a frequency comparison score equal to the mutual appearances divided by the total appearances.
 
-# In[171]:
+# In[213]:
 
 
 print("Frequency comparison of",lily_sample.author,":", frequency_comparison(murderer_sample.word_count_frequency, lily_sample.word_count_frequency))
@@ -244,7 +260,7 @@ print("Frequency comparison of",gregg_sample.author," :", frequency_comparison(m
 # 
 # In the numerator is the absolute value (use `abs()`) of the two values subtracted from each other. In the denominator is the average of the two values (value1 + value2 divided by two).
 
-# In[172]:
+# In[214]:
 
 
 def percent_difference(value1, value2):
@@ -271,10 +287,11 @@ print("percent diff for",gregg_sample.author," :",percent_difference(murderer_va
 # - Calculate the difference between their two-word ngram using `frequency_table` on both `TextSample`'s `ngram_frequency` attributes. Save that into a variable called `ngram_similarity`.
 # - Add all three similarities together and divide by 3.
 
-# In[173]:
+# In[215]:
 
 
 def find_text_similarity(text_sample1, text_sample2):
+    score = 0
     sentence_length_difference = percent_difference(text_sample1.average_sentence_length, text_sample2.average_sentence_length)
     print(" sentence length difference :", sentence_length_difference)
     
@@ -286,6 +303,10 @@ def find_text_similarity(text_sample1, text_sample2):
    
     ngram_similarity = (frequency_comparison(text_sample1.ngram_frequency, text_sample2.ngram_frequency))
     print(" ngram similarity           :",ngram_similarity)
+    
+    score = (sentence_length_similarity + word_count_similarity + ngram_similarity) /3
+    #print (" avg score :", score)
+    return score
 
 
 # ## Rendering the Results
@@ -295,23 +316,28 @@ def find_text_similarity(text_sample1, text_sample2):
 # - Their name
 # - Their similarity score to the murder letter
 
-# In[174]:
+# In[216]:
 
 
-print(lily_sample.author,"similarity score to the murderer's letter")
-find_text_similarity(murderer_sample, lily_sample)
-print("\n",myrtle_sample.author,"similarity score to the murderer's letter")
-find_text_similarity(murderer_sample, myrtle_sample)
-print("\n",gregg_sample.author,"similarity score to the murderer's letter")
-find_text_similarity(murderer_sample, gregg_sample)
+#print(lily_sample.author,"similarity score to the murderer's letter")
+#print ("Average Similarities :",find_text_similarity(murderer_sample, lily_sample))
+#print("\n",myrtle_sample.author,"similarity score to the murderer's letter")
+#print ("Average Similarities :",find_text_similarity(murderer_sample, myrtle_sample))
+#print("\n",gregg_sample.author,"similarity score to the murderer's letter")
+#print ("Average Similarities :",find_text_similarity(murderer_sample, gregg_sample))
+
+samples = [lily_sample, myrtle_sample, gregg_sample]
+for sample in samples:
+    print("\n",sample.author,"similarity score to the murderer's letter") 
+    print ("Average Similarities :",find_text_similarity(murderer_sample, sample)) 
 
 
 # # Who Dunnit?
 # 
 # In the cell below, print the name of the person who killed Jay Stacksby.
 
-# In[175]:
+# In[217]:
 
 
-print("Lily Trebuchet")
+print("Myrtle Beech's")
 
